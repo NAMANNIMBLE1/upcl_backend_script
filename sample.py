@@ -23,10 +23,10 @@ class Ticket:
 #  CONFIG
 # ─────────────────────────────────────────────
 CONFIG = {
-    "host":     "10.10.10.92",
-    "user":     "root",
-    "password": "Usn7ets2020#",
-    "database": "opfrasu_upclold",
+    "host":     "10.10.10.sample",
+    "user":     "sample",
+    "password": "sample",
+    "database": "sample",
 }
 
 DRY_RUN = False   # ← Set False to commit live changes
