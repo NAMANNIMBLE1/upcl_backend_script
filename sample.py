@@ -32,7 +32,7 @@ CONFIG = {
 DRY_RUN = False   # ← Set False to commit live changes
 
 # ─────────────────────────────────────────────
-#  TICKET DATA  (extracted from PDF)
+#  TICKET DATA (the format neede to update the fields(these + rest))
 #  Fields: ref, subcategory, category, status, priority,
 #          start_date, close_date, ttr_finish_date,
 #          division_name, agent_name, ttr_100_passed
