@@ -1,65 +1,203 @@
-# python script for upcl
+# 🎫 UPCL Ticket Update Tool
 
-this work both with frontend and script 
+A Python-based tool to update ticket data in the UPCL system.
 
-## Installation
+Supports:
+- Script-based bulk updates
+- Streamlit frontend (easy UI)
+- SLA (TTR/TTO) recalculation
+- SQL preview before execution
 
-Install my-project with 
+---
 
-git clone https://github.com/NAMANNIMBLE1/upcl_backend_script.git
+# 📦 Installation
 
-```bash
-install python >= 3.8
+## 1. Clone Repository
 
-python -m venv .venv
+git clone https://github.com/NAMANNIMBLE1/upcl_backend_script.git  
+cd upcl_backend_script  
 
-source .venv/Script/activate 
-for linux source .venv/bin/activate
+---
 
+## 2. Setup Python Environment
 
-pip install -r requirements.txt
+python -m venv .venv  
 
+### Activate Environment
 
-for frontend 
+Windows:
+.venv\Scripts\activate  
 
-streamlit run app.py 
+Linux / Mac:
+source .venv/bin/activate  
 
-for direct script run 
+---
 
-python app.py ( after activating .venv )
+## 3. Install Dependencies
 
+pip install -r requirements.txt  
 
-```
+---
 
-## Usage/Examples
+# 🖥️ Running the Project
 
+## ▶️ Frontend (Recommended)
 
-# for using script directly 
+streamlit run app.py  
 
-### set dry_run = true / false in sample.py 
+👉 Opens UI in browser where you can:
+- Add tickets
+- Generate SQL
+- Execute updates
 
-### dry run will not execute in db but show the changes 
+---
 
-### setup config = {} inside the sample.py 
+## ⚙️ Script Mode
 
-## edit raw_tickets = []
+python sample.py  
 
-  ##### add data here 
-  ##### format is -> Ticket(ref, subcategory, category, status, priority,start_date, close_date, ttr_finish_date,division_name, agent_name, ttr_100_passed)
+---
 
+# 🧠 Usage
 
-## sample example data 
+## 🔹 1. Configure Database
 
-###### ('I-004325', 'IT Issue \\ Application \\ Billing', 'Applications', 'closed', '4', '2026-03-10 13:50:37', '2026-03-10 14:11:38', '2026-03-09 23:26:11', 'Data_Center', 'ankitp', 1)
+Edit inside `sample.py`:
 
+CONFIG = {
+    "host": "your_host",
+    "user": "your_user",
+    "password": "your_password",
+    "database": "your_database"
+}
 
+---
 
-# for frontend
+## 🔹 2. Dry Run Mode (Script Only)
 
-##### run streamlit app.py 
+Set:
 
-###### add teh data in fields and add that ticket ( you can add multiple tickets ) then generate sql and check it & execute it ( no dry run here direct execution permanent )
+DRY_RUN = True  
 
-## License
+| Mode | Behavior |
+|------|--------|
+| True | Shows SQL only |
+| False | Executes updates |
 
-[MIT](https://choosealicense.com/licenses/mit/)
+---
+
+## 🔹 3. Add Ticket Data (Script Mode)
+
+Edit:
+
+RAW_TICKETS = []
+
+### Format:
+
+(
+  ref,
+  subcategory,
+  category,
+  status,
+  priority,
+  start_date,
+  close_date,
+  ttr_finish_date,
+  division_name,
+  agent_name,
+  ttr_100_passed
+)
+
+---
+
+## ✅ Example
+
+RAW_TICKETS = [
+    (
+        'I-004325',
+        'IT Issue \\ Application \\ Billing',
+        'Applications',
+        'closed',
+        '4',
+        '2026-03-10 13:50:37',
+        '2026-03-10 14:11:38',
+        '2026-03-09 23:26:11',
+        'Data_Center',
+        'ankitp',
+        1
+    )
+]
+
+---
+
+# 🧾 Field Explanation
+
+ref → Ticket ID  
+subcategory → Full path  
+category → Main category  
+status → closed / assigned  
+priority → 1 to 5 (1 = Critical, 5 = Low)  
+start_date → Start datetime  
+close_date → Resolution datetime  
+ttr_finish_date → SLA deadline  
+division_name → Division  
+agent_name → Assigned agent  
+ttr_100_passed → 1 = SLA breached  
+
+---
+
+# 🖥️ Frontend Usage
+
+Run:
+
+streamlit run app.py  
+
+Steps:
+
+1. Enter ticket details  
+2. Click ➕ Add Ticket  
+3. Click ⚙️ Generate SQL  
+4. Review output  
+5. Click 🚀 Execute Updates  
+
+⚠️ Note: Frontend directly updates DB (no dry run)
+
+---
+
+# ⚠️ Important Notes
+
+- Always verify data before execution  
+- Changes are permanent  
+- Ensure correct:
+  - Agent name
+  - Division name
+  - Category mapping  
+- Time format must be:
+
+HH:MM:SS  
+
+---
+
+# 🧰 Features
+
+- Bulk ticket updates  
+- SLA (TTR / TTO) calculations  
+- SQL preview  
+- No DB triggers required  
+- Multi-ticket support  
+
+---
+
+# 🛠 Requirements
+
+streamlit  
+mysql-connector-python  
+pandas  
+openpyxl  
+
+---
+
+# 📜 License
+
+MIT License  
+https://choosealicense.com/licenses/mit/
