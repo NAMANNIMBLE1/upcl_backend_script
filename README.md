@@ -2,202 +2,174 @@
 
 A Python-based tool to update ticket data in the UPCL system.
 
-Supports:
-- Script-based bulk updates
-- Streamlit frontend (easy UI)
-- SLA (TTR/TTO) recalculation
-- SQL preview before execution
+---
+
+## 📦 Requirements
+
+- Python 3.8+
+- MySQL access (credentials required)
 
 ---
 
-# 📦 Installation
+## ⚙️ Installation
 
-## 1. Clone Repository
+### 1. Clone Repository
 
-git clone https://github.com/NAMANNIMBLE1/upcl_backend_script.git  
-cd upcl_backend_script  
+```bash
+git clone https://github.com/NAMANNIMBLE1/upcl_backend_script.git
+cd upcl_backend_script
+```
 
----
+### 2. Create Virtual Environment
 
-## 2. Setup Python Environment
+```bash
+python -m venv .venv
+```
 
-python -m venv .venv  
+#### Activate Environment
 
-### Activate Environment
+**Windows**
+```bash
+.venv\Scripts\activate
+```
 
-Windows:
-.venv\Scripts\activate  
+**Linux / Mac**
+```bash
+source .venv/bin/activate
+```
 
-Linux / Mac:
-source .venv/bin/activate  
+### 3. Install Dependencies
 
----
-
-## 3. Install Dependencies
-
-pip install -r requirements.txt  
-
----
-
-# 🖥️ Running the Project
-
-## ▶️ Frontend (Recommended)
-
-streamlit run app.py  
-
-👉 Opens UI in browser where you can:
-- Add tickets
-- Generate SQL
-- Execute updates
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-## ⚙️ Script Mode
+## 🗄️ Database Configuration
 
-python sample.py  
+Update DB credentials inside:
 
----
+- `update_2input.py`
+- `update_4input.py`
+- `app.py` (via CONFIG import)
 
-# 🧠 Usage
-
-## 🔹 1. Configure Database
-
-Edit inside `sample.py`:
-
+```python
 CONFIG = {
     "host": "your_host",
     "user": "your_user",
     "password": "your_password",
-    "database": "your_database"
+    "database": "your_database",
 }
+```
 
 ---
 
-## 🔹 2. Dry Run Mode (Script Only)
+## ▶️ How to Run
 
-Set:
+### 🔹 1. Streamlit UI (Recommended)
 
-DRY_RUN = True  
+```bash
+streamlit run app.py
+```
 
-| Mode | Behavior |
-|------|--------|
-| True | Shows SQL only |
-| False | Executes updates |
+> Opens a browser-based UI for interactive use.
 
----
+### 🔹 2. CLI Scripts
 
-## 🔹 3. Add Ticket Data (Script Mode)
+**2-Input Script**
+```bash
+python update_2input.py
+```
 
-Edit:
-
-RAW_TICKETS = []
-
-### Format:
-
-(
-  ref,
-  subcategory,
-  category,
-  status,
-  priority,
-  start_date,
-  close_date,
-  ttr_finish_date,
-  division_name,
-  agent_name,
-  ttr_100_passed
-)
+**4-Input Script**
+```bash
+python update_4input.py
+```
 
 ---
 
-## ✅ Example
+## 🧠 How to Use
 
-RAW_TICKETS = [
-    (
-        'I-004325',
-        'IT Issue \\ Application \\ Billing',
-        'Applications',
-        'closed',
-        '4',
-        '2026-03-10 13:50:37',
-        '2026-03-10 14:11:38',
-        '2026-03-09 23:26:11',
-        'Data_Center',
-        'ankitp',
-        1
-    )
-]
+### 🔹 Streamlit UI
+
+1. Select mode: **2-Input** or **4-Input**
+2. Fill in the required details
+3. Click **➕ Add to Queue**
+4. Click **⚙️ Generate SQL Preview**
+5. Review the generated SQL
+6. Click **✅ Confirm & Execute**
 
 ---
 
-# 🧾 Field Explanation
+### 🔹 2-Input Mode
 
-ref → Ticket ID  
-subcategory → Full path  
-category → Main category  
-status → closed / assigned  
-priority → 1 to 5 (1 = Critical, 5 = Low)  
-start_date → Start datetime  
-close_date → Resolution datetime  
-ttr_finish_date → SLA deadline  
-division_name → Division  
-agent_name → Assigned agent  
-ttr_100_passed → 1 = SLA breached  
+**Inputs:**
+- Ticket Ref
+- Resolution Date
+- Resolution Time
+
+**Use when:**
+- Only closing a ticket
+- No category changes needed
 
 ---
 
-# 🖥️ Frontend Usage
+### 🔹 4-Input Mode
 
-Run:
+**Inputs:**
+- Ticket Ref
+- Category
+- Subcategory
+- Resolution Date
+- Resolution Time
 
-streamlit run app.py  
-
-Steps:
-
-1. Enter ticket details  
-2. Click ➕ Add Ticket  
-3. Click ⚙️ Generate SQL  
-4. Review output  
-5. Click 🚀 Execute Updates  
-
-⚠️ Note: Frontend directly updates DB (no dry run)
+**Use when:**
+- Need to update category/subcategory
+- Also closing the ticket
 
 ---
 
-# ⚠️ Important Notes
+### 🔹 CLI Usage
 
-- Always verify data before execution  
-- Changes are permanent  
-- Ensure correct:
-  - Agent name
-  - Division name
-  - Category mapping  
-- Time format must be:
+**2-Input**
+```bash
+python update_2input.py
+```
+- Enter ticket ref
+- Enter resolution time
+- Confirm execution
 
-HH:MM:SS  
-
----
-
-# 🧰 Features
-
-- Bulk ticket updates  
-- SLA (TTR / TTO) calculations  
-- SQL preview  
-- No DB triggers required  
-- Multi-ticket support  
+**4-Input**
+```bash
+python update_4input.py
+```
+- Enter ticket ref
+- Enter category
+- Enter subcategory
+- Enter resolution time
+- Confirm execution
 
 ---
 
-# 🛠 Requirements
+## ⚠️ Important Notes
 
-streamlit  
-mysql-connector-python  
-pandas  
-openpyxl  
+- Changes are **permanent** — always verify before execution
+- Time format must be: `YYYY-MM-DD HH:MM:SS`
+- Category & subcategory must match values in the database
 
 ---
 
-# 📜 License
+## 🧰 Features
 
-MIT License  
-https://choosealicense.com/licenses/mit/
+- Ticket updates
+- SLA recalculation
+- SQL preview before execution
+- Queue support (UI mode)
+- CLI + UI support
+
+---
+
+## 📜 License
+
+[MIT License](https://choosealicense.com/licenses/mit/)
