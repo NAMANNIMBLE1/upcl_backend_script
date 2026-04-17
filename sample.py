@@ -1,3 +1,11 @@
+# 
+
+#        this is old script now 
+#        dont use it -> use update_2_inputs and 4 for any updation 
+
+# 
+
+
 import mysql.connector
 from dataclasses import dataclass
 from typing import Optional

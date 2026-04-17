@@ -1,0 +1,3 @@
+resolution 
+close data 
+category and subcaetgory 

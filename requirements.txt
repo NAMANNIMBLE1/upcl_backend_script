@@ -1,4 +1,4 @@
 streamlit
 mysql-connector-python
 pandas
-openpyxl
+openpyxlgit remote add origin https://github.com/NAMANNIMBLE1/upcl_backend_script.git
