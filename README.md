@@ -152,6 +152,24 @@ python update_4input.py
 
 ---
 
+## 🧪 DRY_RUN Mode (CLI Scripts)
+
+Both `update_2input.py` and `update_4input.py` include a `DRY_RUN` parameter at the top of the script:
+
+```python
+DRY_RUN = True   # Preview mode — no changes made to DB
+DRY_RUN = False  # Live mode — executes directly in DB
+```
+
+| Mode | Behavior |
+|------|----------|
+| `DRY_RUN = True` | Generates and displays the SQL query without executing it |
+| `DRY_RUN = False` | Executes the SQL query directly against the database |
+
+> ⚠️ **Always test with `DRY_RUN = True` first** before switching to `False` to avoid unintended changes.
+
+---
+
 ## ⚠️ Important Notes
 
 - Changes are **permanent** — always verify before execution
